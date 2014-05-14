@@ -58,11 +58,13 @@
     
     NSDictionary *values = @{@"A": @{
                                         @"bin": @"1010",
-                                        @"dec": @"10"
+                                        @"dec": @"10",
+                                        @"hex": @"A",
                                     },
                              @"B": @{
                                         @"bin": @"1011",
-                                        @"dec": @"11"
+                                        @"dec": @"11",
+                                        @"hex": @"B",
                                     }
                              };
     
@@ -70,8 +72,37 @@
     AnswerType *binAnswerType = [AnswerType answerTypeWithCode:@"bin" onContext:self.context];
     AnswerType *hexAnswerType = [AnswerType answerTypeWithCode:@"hex" onContext:self.context];
     AnswerType *decAnswerType = [AnswerType answerTypeWithCode:@"dec" onContext:self.context];
-    NSArray *answerTypes = @[binAnswerType, decAnswerType];
     
+    NSDictionary *binToHex = @{binAnswerType.answertypcd: hexAnswerType.answertypcd};
+    NSDictionary *hexToBin = @{hexAnswerType.answertypcd: binAnswerType.answertypcd};
+    NSDictionary *decToHex = @{decAnswerType.answertypcd: hexAnswerType.answertypcd};
+    NSDictionary *hexToDec = @{hexAnswerType.answertypcd: decAnswerType.answertypcd};
+    NSDictionary *binToDec = @{binAnswerType.answertypcd: decAnswerType.answertypcd};
+    NSDictionary *decToBin = @{decAnswerType.answertypcd: binAnswerType.answertypcd};
+    
+    NSArray *questions = @[binToHex, hexToBin, decToHex, hexToDec, binToDec, decToBin];
+    
+ 
+    NSInteger questionID = 1;
+    for (NSString *key in values) {
+        NSDictionary *hexDict = [values objectForKey:key];
+        for (NSDictionary *questionType in questions) {
+            NSString *fromAnswerType = [[questionType allKeys] firstObject];
+            NSString *toAnswerType = questionType[fromAnswerType];
+            
+            NSString *fromValue = hexDict[fromAnswerType];
+            NSString *toValue = hexDict[toAnswerType];
+            
+            NSString *questionText = [NSString stringWithFormat:@"What is %@(%@) in %@?", fromValue, fromAnswerType, toAnswerType];
+            NSString *answerText = toValue;
+            NSLog(@"Question: %@", questionText);
+            NSLog(@"  Answer: %@", answerText);
+        }
+        
+        questionID++;
+    }
+    
+    /*
     NSInteger questionID = 1;
     for (NSString *key in values) {
         NSLog(@"Creating questions for key: %@", key);
@@ -97,7 +128,7 @@
             
             questionID += 1;
         }
-    }
+    }*/
     
 }
 
