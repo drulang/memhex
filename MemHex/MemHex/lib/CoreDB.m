@@ -95,8 +95,16 @@
             
             NSString *questionText = [NSString stringWithFormat:@"What is %@(%@) in %@?", fromValue, fromAnswerType, toAnswerType];
             NSString *answerText = toValue;
+            
             NSLog(@"Question: %@", questionText);
             NSLog(@"  Answer: %@", answerText);
+            
+            Question *newQuestion = [Question createQuestionWithID:[NSNumber numberWithInt:questionID]
+                                                           andText:questionText onContext:self.context];
+            AnswerType *answerAnswerType = [AnswerType answerTypeWithCode:toAnswerType onContext:self.context];
+            Answer *newAnswer = [Answer createAnswerWithText:answerText
+                                           AndAnswerTypeCode:answerAnswerType onContext:self.context];
+            newQuestion.answer = newAnswer;
         }
         
         questionID++;
