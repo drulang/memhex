@@ -23,8 +23,6 @@
 		7118199D191FD5E1001FD4C9 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7118199C191FD5E1001FD4C9 /* XCTest.framework */; };
 		7118199E191FD5E1001FD4C9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7118197D191FD5E1001FD4C9 /* Foundation.framework */; };
 		7118199F191FD5E1001FD4C9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71181981191FD5E1001FD4C9 /* UIKit.framework */; };
-		711819A7191FD5E1001FD4C9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 711819A5191FD5E1001FD4C9 /* InfoPlist.strings */; };
-		711819A9191FD5E1001FD4C9 /* MemHexTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 711819A8191FD5E1001FD4C9 /* MemHexTests.m */; };
 		711819B5191FE2F8001FD4C9 /* MemHexViewController.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 711819B3191FE2F8001FD4C9 /* MemHexViewController.xcdatamodeld */; };
 		71181A1E19219676001FD4C9 /* AnswerType+create.m in Sources */ = {isa = PBXBuildFile; fileRef = 71181A1D19219676001FD4C9 /* AnswerType+create.m */; };
 		71181A251922DAC9001FD4C9 /* CoreDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 71181A241922DAC9001FD4C9 /* CoreDB.m */; };
@@ -66,9 +64,6 @@
 		71181995191FD5E1001FD4C9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		7118199B191FD5E1001FD4C9 /* MemHexTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MemHexTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7118199C191FD5E1001FD4C9 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		711819A4191FD5E1001FD4C9 /* MemHexTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MemHexTests-Info.plist"; sourceTree = "<group>"; };
-		711819A6191FD5E1001FD4C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		711819A8191FD5E1001FD4C9 /* MemHexTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MemHexTests.m; sourceTree = "<group>"; };
 		711819B4191FE2F8001FD4C9 /* MemHexViewController.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MemHexViewController.xcdatamodel; sourceTree = "<group>"; };
 		71181A1C19219676001FD4C9 /* AnswerType+create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AnswerType+create.h"; path = "model/AnswerType+create.h"; sourceTree = "<group>"; };
 		71181A1D19219676001FD4C9 /* AnswerType+create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "AnswerType+create.m"; path = "model/AnswerType+create.m"; sourceTree = "<group>"; };
@@ -106,7 +101,6 @@
 			isa = PBXGroup;
 			children = (
 				71181983191FD5E1001FD4C9 /* MemHex */,
-				711819A2191FD5E1001FD4C9 /* MemHexTests */,
 				7118197C191FD5E1001FD4C9 /* Frameworks */,
 				7118197B191FD5E1001FD4C9 /* Products */,
 			);
@@ -155,24 +149,6 @@
 				71181986191FD5E1001FD4C9 /* InfoPlist.strings */,
 				71181989191FD5E1001FD4C9 /* main.m */,
 				7118198B191FD5E1001FD4C9 /* MemHex-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		711819A2191FD5E1001FD4C9 /* MemHexTests */ = {
-			isa = PBXGroup;
-			children = (
-				711819A8191FD5E1001FD4C9 /* MemHexTests.m */,
-				711819A3191FD5E1001FD4C9 /* Supporting Files */,
-			);
-			path = MemHexTests;
-			sourceTree = "<group>";
-		};
-		711819A3191FD5E1001FD4C9 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				711819A4191FD5E1001FD4C9 /* MemHexTests-Info.plist */,
-				711819A5191FD5E1001FD4C9 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -293,7 +269,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				711819A7191FD5E1001FD4C9 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,7 +297,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				711819A9191FD5E1001FD4C9 /* MemHexTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,14 +325,6 @@
 				71181990191FD5E1001FD4C9 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		711819A5191FD5E1001FD4C9 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				711819A6191FD5E1001FD4C9 /* en */,
-			);
-			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
