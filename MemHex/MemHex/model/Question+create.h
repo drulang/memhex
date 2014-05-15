@@ -14,4 +14,5 @@
                             andText: (NSString *)text
                           onContext: (NSManagedObjectContext *)context;
 
++ (Question *) randomQuestionOnContext: (NSManagedObjectContext *)context;
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "Answer.h"
+#import "AnswerType.h"
 
 @interface Answer (create)
 
@@ -14,4 +15,8 @@
               AndAnswerTypeCode: (AnswerType *)answertypcd
                     onContext: (NSManagedObjectContext *)context;
 
++ (NSArray *) chooseRandomAnswersByType:(AnswerType *)type
+                          limitToNumber:(NSUInteger)count
+                             skipAnswer:(Answer *)answer
+                              onContext:(NSManagedObjectContext *)context;
 @end

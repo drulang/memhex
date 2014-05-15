@@ -14,6 +14,9 @@
 @implementation CoreDB
 
 - (instancetype) initCoreDB {
+    /*
+        Default data is only initialized once
+    */
     self = [super init];
     NSLog(@"Initializing CoreDB");
     if (self) {
@@ -29,7 +32,6 @@
             [document openWithCompletionHandler:^(BOOL success) {
                 if (success) {
                     self.context = document.managedObjectContext;
-                    [self createDefaultData];
                 } else {
                     NSLog(@"Unable to open database");
                 }
@@ -41,7 +43,14 @@
               completionHandler:^(BOOL success) {
                   if (success) {
                       self.context = document.managedObjectContext;
-                      [self createDefaultData];
+                      [self.context performBlock:^{
+                          [self createDefaultData];
+                          NSError *error = nil;
+                          [self.context save:&error];
+                          if (error) {
+                              NSLog(@"Error saving db");
+                          }
+                      }];
                   } else {
                       NSLog(@"Unable to create database");
                   }
@@ -65,7 +74,28 @@
                                         @"bin": @"1011",
                                         @"dec": @"11",
                                         @"hex": @"B",
-                                    }
+                                    },
+                             @"C": @{
+                                     @"bin": @"1100",
+                                     @"dec": @"12",
+                                     @"hex": @"C",
+                                     },
+                             @"D": @{
+                                     @"bin": @"1101",
+                                     @"dec": @"13",
+                                     @"hex": @"D",
+                                     },
+                             @"E": @{
+                                     @"bin": @"1110",
+                                     @"dec": @"14",
+                                     @"hex": @"E",
+                                     },
+                             @"F": @{
+                                     @"bin": @"1111",
+                                     @"dec": @"15",
+                                     @"hex": @"F",
+                                     },
+                             
                              };
     
     //Create answer types
@@ -82,7 +112,7 @@
     
     NSArray *questions = @[binToHex, hexToBin, decToHex, hexToDec, binToDec, decToBin];
     
- 
+
     NSInteger questionID = 1;
     for (NSString *key in values) {
         NSDictionary *hexDict = [values objectForKey:key];
@@ -105,39 +135,9 @@
             Answer *newAnswer = [Answer createAnswerWithText:answerText
                                            AndAnswerTypeCode:answerAnswerType onContext:self.context];
             newQuestion.answer = newAnswer;
+            questionID++;
         }
-        
-        questionID++;
     }
-    
-    /*
-    NSInteger questionID = 1;
-    for (NSString *key in values) {
-        NSLog(@"Creating questions for key: %@", key);
-        NSDictionary *hexDict = [values objectForKey:key];
-        
-        //Create BIN Questions
-        for (AnswerType *answerType in answerTypes) {
-            //Question of something -> Hex
-            NSString *questionText = [NSString stringWithFormat:@"What is %@ in %@?", key, answerType.answertypcd];
-            NSLog(@"Question: %@", questionText);
-            Question *hexToBin = [Question createQuestionWithID:[NSNumber numberWithInt:questionID]
-                                                        andText:questionText onContext:self.context];
-            hexToBin.answer = [Answer createAnswerWithText:hexDict[answerType.answertypcd]
-                                         AndAnswerTypeCode:binAnswerType onContext:self.context];
-            
-            //Question hex ->
-            questionText = [NSString stringWithFormat:@"What is %@(%@) in hex?", hexDict[answerType.answertypcd], answerType.answertypcd];
-            NSLog(@"Question: %@", questionText);
-            Question *binToHex = [Question createQuestionWithID:[NSNumber numberWithInt:questionID]
-                                                        andText:questionText onContext:self.context];
-            binToHex.answer = [Answer createAnswerWithText:key
-                                         AndAnswerTypeCode:hexAnswerType onContext:self.context];
-            
-            questionID += 1;
-        }
-    }*/
-    
 }
 
 @end

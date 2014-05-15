@@ -36,4 +36,37 @@
     return answer;
 }
 
++ (NSArray *)chooseRandomAnswersByType:(AnswerType *)type
+                         limitToNumber:(NSUInteger)count
+                            skipAnswer:(Answer *)answer
+                             onContext:(NSManagedObjectContext *)context {
+    NSMutableArray *results = [[NSMutableArray alloc] init];
+    
+    NSArray *allAnswersWithType = [type.answersWithType allObjects];
+    if (!allAnswersWithType) {
+        NSLog(@"No answers with type");
+    } else {
+        //Choose randomly from allAnswersWithType
+        NSMutableArray *choosenIndex = [[NSMutableArray alloc] init];
+        
+        for (int i=0; i < count; i++) {
+            while (true) {
+                NSUInteger idx = arc4random() % [allAnswersWithType count];
+                NSNumber *idxNumber = [NSNumber numberWithInt:idx];
+                if ([choosenIndex containsObject:idxNumber]) {
+                    continue;
+                } else if (allAnswersWithType[idx] == answer) {
+                    NSLog(@"Skipping matching answer");
+                    continue;
+                } else {
+                    [results addObject:allAnswersWithType[idx]];
+                    [choosenIndex addObject:idxNumber];
+                    break;
+                }
+            }
+        }//end for
+    }
+    return results;
+}
+
 @end

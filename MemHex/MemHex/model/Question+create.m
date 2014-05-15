@@ -37,4 +37,25 @@
     return question;
 }
 
++ (Question *)randomQuestionOnContext:(NSManagedObjectContext *)context {
+    Question *question = nil;
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Question"];
+    NSError *error = nil;
+    NSUInteger numberOfQuestions = [context countForFetchRequest:request error:&error];
+    if (error) {
+        NSLog(@"Error getting number of questions");
+    } else {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id = %d", arc4random() % numberOfQuestions];
+        request.predicate = predicate;
+        
+        NSArray *results = [context executeFetchRequest:request error:&error];
+        
+        question = [results firstObject];
+    }
+    
+    
+    return question;
+}
+
 @end

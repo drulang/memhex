@@ -25,6 +25,9 @@
                                     <color key="titleColor" red="0.99916889929999997" green="0.97024850200000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="nextQuestion:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="3M7-hh-TwZ"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FXC-yO-9uN">
                                 <rect key="frame" x="0.0" y="264" width="153" height="136"/>
@@ -83,6 +86,13 @@
                         </subviews>
                         <color key="backgroundColor" red="0.26666668057441711" green="0.26666668057441711" blue="0.26666668057441711" alpha="1" colorSpace="deviceRGB"/>
                     </view>
+                    <connections>
+                        <outlet property="questionLabel" destination="Dm3-6k-4Ly" id="WGn-2V-2jx"/>
+                        <outletCollection property="answerButtons" destination="FXC-yO-9uN" id="1JN-xo-ynM"/>
+                        <outletCollection property="answerButtons" destination="19a-2X-Prv" id="COJ-pB-MtD"/>
+                        <outletCollection property="answerButtons" destination="BeK-Xz-g36" id="58N-IC-FJG"/>
+                        <outletCollection property="answerButtons" destination="B8C-f9-6H5" id="B60-uh-Fo1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>

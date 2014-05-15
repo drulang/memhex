@@ -131,8 +131,6 @@
 			children = (
 				71181A221922DA99001FD4C9 /* lib */,
 				711819B2191FE2B5001FD4C9 /* model */,
-				7118198C191FD5E1001FD4C9 /* MemHexAppDelegate.h */,
-				7118198D191FD5E1001FD4C9 /* MemHexAppDelegate.m */,
 				7118198F191FD5E1001FD4C9 /* Main.storyboard */,
 				71181992191FD5E1001FD4C9 /* MemHexViewController.h */,
 				71181993191FD5E1001FD4C9 /* MemHexViewController.m */,
@@ -145,6 +143,8 @@
 		71181984191FD5E1001FD4C9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				7118198C191FD5E1001FD4C9 /* MemHexAppDelegate.h */,
+				7118198D191FD5E1001FD4C9 /* MemHexAppDelegate.m */,
 				71181985191FD5E1001FD4C9 /* MemHex-Info.plist */,
 				71181986191FD5E1001FD4C9 /* InfoPlist.strings */,
 				71181989191FD5E1001FD4C9 /* main.m */,

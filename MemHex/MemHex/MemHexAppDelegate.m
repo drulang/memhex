@@ -16,7 +16,7 @@
     // Override point for customization after application launch.
     //Setup database
     
-    CoreDB *db = [[CoreDB alloc] initCoreDB];
+
     return YES;
 }
 
