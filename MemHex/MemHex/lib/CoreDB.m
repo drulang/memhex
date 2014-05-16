@@ -123,7 +123,7 @@
             NSString *fromValue = hexDict[fromAnswerType];
             NSString *toValue = hexDict[toAnswerType];
             
-            NSString *questionText = [NSString stringWithFormat:@"What is %@(%@) in %@?", fromValue, fromAnswerType, toAnswerType];
+            NSString *questionText = [NSString stringWithFormat:@"What is %@ %@ to %@?", fromValue, fromAnswerType, toAnswerType];
             NSString *answerText = toValue;
             
             NSLog(@"Question: %@", questionText);
