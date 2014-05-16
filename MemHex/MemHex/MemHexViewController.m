@@ -17,10 +17,13 @@
 @property (nonatomic, strong) CoreDB *db;
 @property (nonatomic, strong) Question *currentQuestion;
 @property (nonatomic, strong) NSMutableArray *answers;
-@property (nonatomic) NSUInteger userScore;
+@property (nonatomic) NSInteger userScore;
 @property (weak, nonatomic) IBOutlet UILabel *questionLabel;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *answerButtons;
 @property (weak, nonatomic) IBOutlet UIImageView *answerCorrectImage;
+@property (weak, nonatomic) IBOutlet UILabel *userScoreLabel;
+@property (nonatomic) BOOL currentQuestionCorrect;
+@property (weak, nonatomic) IBOutlet UIButton *resetScoreButton;
 
 @end
 
@@ -44,7 +47,8 @@
         [self updateUI];
     }];
     
-     self.userScore = 0;
+    self.userScore = 0;
+    self.currentQuestionCorrect = NO;
 }
 
 - (void) updateData{
@@ -60,11 +64,14 @@
     self.answers = [[NSMutableArray alloc] initWithArray:randomAnswers];
     //[self.answers addObjectsFromArray:randomAnswers];
     [self.answers addObject:correctAnswer];
+    self.currentQuestionCorrect = NO;
 }
 
 - (IBAction)nextQuestion:(UIButton *)sender {
-    
     [self.db.context performBlock:^{
+        if (!self.currentQuestionCorrect) {
+            self.userScore -= 5;
+        }
         [self updateData];
         [self updateUI];
     }];
@@ -93,9 +100,10 @@
                 [choosenIndex addObject:idxNumber];
                 break;
             }
-            
         }
     }
+
+    self.userScoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.userScore];
 }
 - (IBAction)answerClicked:(UIButton *)sender {
     NSString *submittedAnswer = sender.titleLabel.text;
@@ -114,12 +122,40 @@
                 button.alpha = 0.2f;
             }
         }
+        self.userScore += 2;
+        self.currentQuestionCorrect = YES;
     } else {
         NSLog(@"Question is wrong");
         sender.alpha = 0.2f;
         sender.tintColor = [UIColor blackColor];
+        self.userScore--;
+        
+        //If this was the last correct answer, then disable the correct answer
+        NSUInteger numberWrongAnswers = 0;
+        for (UIButton *button in self.answerButtons) {
+            if (!button.enabled) {
+                numberWrongAnswers++;
+            }
+        }
+        
+        if (numberWrongAnswers >= 3) {
+            //Disable last question
+        }
     }
     sender.enabled = NO;
+   
+    //See if user score is so low it needs to be reset
+    if (self.userScore < -30) {
+        NSLog(@"User Score: %d", self.userScore);
+        self.resetScoreButton.hidden = NO;
+    }
+    
+    self.userScoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.userScore];
+}
+- (IBAction)resetUserScore:(UIButton *)sender {
+    NSLog(@"Resetting user score");
+    self.userScore = 0;
+    sender.hidden = YES;
 }
 
 @end

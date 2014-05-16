@@ -112,7 +112,6 @@
     
     NSArray *questions = @[binToHex, hexToBin, decToHex, hexToDec, binToDec, decToBin];
     
-
     NSInteger questionID = 1;
     for (NSString *key in values) {
         NSDictionary *hexDict = [values objectForKey:key];
@@ -123,7 +122,7 @@
             NSString *fromValue = hexDict[fromAnswerType];
             NSString *toValue = hexDict[toAnswerType];
             
-            NSString *questionText = [NSString stringWithFormat:@"What is %@ %@ to %@?", fromValue, fromAnswerType, toAnswerType];
+            NSString *questionText = [NSString stringWithFormat:@"What is %@, %@ to %@?", fromValue, fromAnswerType, toAnswerType];
             NSString *answerText = toValue;
             
             NSLog(@"Question: %@", questionText);

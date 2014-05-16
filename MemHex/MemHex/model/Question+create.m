@@ -46,12 +46,17 @@
     if (error) {
         NSLog(@"Error getting number of questions");
     } else {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id = %d", arc4random() % numberOfQuestions];
+        NSString *questionID = [NSString stringWithFormat: @"%d", (arc4random() % numberOfQuestions) + 1]; //Incr by one because IDs start at 1
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id = %@", questionID];
         request.predicate = predicate;
         
         NSArray *results = [context executeFetchRequest:request error:&error];
         
         question = [results firstObject];
+        
+        if (!question) {
+            NSLog(@"ERROR: question is nil. QuestionID: %@", questionID);
+        }
     }
     
     
