@@ -52,6 +52,11 @@
         
         NSArray *results = [context executeFetchRequest:request error:&error];
         
+        /*
+        for(Question *q in results) {
+            NSLog(@"QuestionID: %@", q.id);
+        }*/
+        
         question = [results firstObject];
         
         if (!question) {

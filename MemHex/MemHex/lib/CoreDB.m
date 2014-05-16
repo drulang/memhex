@@ -29,9 +29,11 @@
         BOOL fileExists = [fileManager fileExistsAtPath:[url path]];
         
         if (fileExists) {
+            NSLog(@"File exists. Procedding to open");
             [document openWithCompletionHandler:^(BOOL success) {
                 if (success) {
                     self.context = document.managedObjectContext;
+                    NSLog(@"Context has been opened");
                 } else {
                     NSLog(@"Unable to open database");
                 }
@@ -44,12 +46,12 @@
                   if (success) {
                       self.context = document.managedObjectContext;
                       [self.context performBlock:^{
-                          [self createDefaultData];
-                          NSError *error = nil;
-                          [self.context save:&error];
-                          if (error) {
-                              NSLog(@"Error saving db");
-                          }
+                          [self createDefaultDataWithContext:document.managedObjectContext];
+                          
+                          [document saveToURL:document.fileURL forSaveOperation:UIDocumentSaveForOverwriting
+                            completionHandler:^(BOOL success) {
+                                NSLog(@"Finished saving");
+                            }];
                       }];
                   } else {
                       NSLog(@"Unable to create database");
@@ -61,7 +63,7 @@
 }
 
 
-- (void)createDefaultData{
+- (void)createDefaultDataWithContext:(NSManagedObjectContext *)context{
     
     NSLog(@"Creating default data in database");
     
@@ -99,9 +101,9 @@
                              };
     
     //Create answer types
-    AnswerType *binAnswerType = [AnswerType answerTypeWithCode:@"bin" onContext:self.context];
-    AnswerType *hexAnswerType = [AnswerType answerTypeWithCode:@"hex" onContext:self.context];
-    AnswerType *decAnswerType = [AnswerType answerTypeWithCode:@"dec" onContext:self.context];
+    AnswerType *binAnswerType = [AnswerType answerTypeWithCode:@"bin" onContext:context];
+    AnswerType *hexAnswerType = [AnswerType answerTypeWithCode:@"hex" onContext:context];
+    AnswerType *decAnswerType = [AnswerType answerTypeWithCode:@"dec" onContext:context];
     
     NSDictionary *binToHex = @{binAnswerType.answertypcd: hexAnswerType.answertypcd};
     NSDictionary *hexToBin = @{hexAnswerType.answertypcd: binAnswerType.answertypcd};
@@ -129,10 +131,10 @@
             NSLog(@"  Answer: %@", answerText);
             
             Question *newQuestion = [Question createQuestionWithID:[NSNumber numberWithInt:questionID]
-                                                           andText:questionText onContext:self.context];
-            AnswerType *answerAnswerType = [AnswerType answerTypeWithCode:toAnswerType onContext:self.context];
+                                                           andText:questionText onContext:context];
+            AnswerType *answerAnswerType = [AnswerType answerTypeWithCode:toAnswerType onContext:context];
             Answer *newAnswer = [Answer createAnswerWithText:answerText
-                                           AndAnswerTypeCode:answerAnswerType onContext:self.context];
+                                           AndAnswerTypeCode:answerAnswerType onContext:context];
             newQuestion.answer = newAnswer;
             questionID++;
         }

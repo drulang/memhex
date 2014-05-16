@@ -15,8 +15,6 @@
 {
     // Override point for customization after application launch.
     //Setup database
-    
-
     return YES;
 }
 

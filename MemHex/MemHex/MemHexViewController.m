@@ -56,6 +56,7 @@
     Answer *correctAnswer = self.currentQuestion.answer;
     
     NSLog(@"Current Question: %@", self.currentQuestion.text);
+    NSLog(@"      Question ID: %@", self.currentQuestion.id);
     NSLog(@"          Answer: %@", correctAnswer.text);
     
     //Random Answers
