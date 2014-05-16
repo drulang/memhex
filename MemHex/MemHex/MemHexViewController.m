@@ -104,6 +104,7 @@
     }
 
     self.userScoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.userScore];
+    [self.answerCorrectImage setImage: [UIImage imageNamed:@"check"]];
 }
 - (IBAction)answerClicked:(UIButton *)sender {
     NSString *submittedAnswer = sender.titleLabel.text;
@@ -129,23 +130,34 @@
         sender.alpha = 0.2f;
         sender.tintColor = [UIColor blackColor];
         self.userScore--;
-        
-        //If this was the last correct answer, then disable the correct answer
-        NSUInteger numberWrongAnswers = 0;
-        for (UIButton *button in self.answerButtons) {
-            if (!button.enabled) {
-                numberWrongAnswers++;
-            }
-        }
-        
-        if (numberWrongAnswers >= 3) {
-            //Disable last question
-        }
     }
     sender.enabled = NO;
+    
+    //If this was the last correct answer, then disable the correct answer
+    NSUInteger numberWrongAnswers = 0;
+    for (UIButton *button in self.answerButtons) {
+        if (!button.enabled) {
+            numberWrongAnswers++;
+        }
+    }
+    NSLog(@"Number of wrong answers: %d", numberWrongAnswers);
+    
+    if (numberWrongAnswers >= 3) {
+        //Disable last question
+        for (UIButton *button in self.answerButtons) {
+            if (button.enabled) {
+                //This is the correct answer
+                button.alpha = 0.8f;
+                button.enabled = NO;
+                [self.answerCorrectImage setImage:[UIImage imageNamed:@"wrong"]];
+                self.answerCorrectImage.hidden = NO;
+            }
+        }
+    }
+    
    
     //See if user score is so low it needs to be reset
-    if (self.userScore < -30) {
+    if (self.userScore < -20) {
         NSLog(@"User Score: %d", self.userScore);
         self.resetScoreButton.hidden = NO;
     }
