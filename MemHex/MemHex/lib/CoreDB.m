@@ -36,13 +36,9 @@
                     self.context = document.managedObjectContext;
                     NSLog(@"Context has been opened");
                     
-                    /*
-                       Send notification the database is available
-                    */
                     NSLog(@"Sending notification DB is ready");
                     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-                    NSDictionary *userInfo = @{@"test": @"va"};
-                    [center postNotificationName:CoreDBAvailiabilityNotification object:nil userInfo:userInfo];
+                    [center postNotificationName:CoreDBAvailiabilityNotification object:nil userInfo:nil];
                     
                 } else {
                     NSLog(@"Unable to open database");
@@ -57,14 +53,7 @@
                       self.context = document.managedObjectContext;
                       [self.context performBlock:^{
                           [self createDefaultDataWithDocument:document];
-                          
-                          //Send notification
-                          [NSThread sleepForTimeInterval:3];
-                          NSLog(@"Sending notification DB is ready");
-                          NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-                          NSDictionary *userInfo = @{@"test": @"va"};
-                          [center postNotificationName:CoreDBAvailiabilityNotification object:nil userInfo:userInfo];
-                          
+                          //Notification is sent in the createDefaultDataWithDocument method
                       }];
                   } else {
                       NSLog(@"Unable to create database");
@@ -74,7 +63,6 @@
     }
     return self;
 }
-
 
 - (void)createDefaultDataWithDocument:(UIManagedDocument *)document{
     NSManagedObjectContext *context = document.managedObjectContext;
@@ -157,6 +145,9 @@
     [document saveToURL:document.fileURL forSaveOperation:UIDocumentSaveForOverwriting
       completionHandler:^(BOOL success) {
           NSLog(@"Finished saving");
+          NSLog(@"Sending notification DB is ready");
+          NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+          [center postNotificationName:CoreDBAvailiabilityNotification object:nil userInfo:nil];
       }];
 }
 

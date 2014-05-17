@@ -125,16 +125,17 @@
                                 <color key="textColor" red="0.14151136106691664" green="1" blue="0.22391861584725115" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Xiq-Vz-RnB">
-                                <rect key="frame" x="141" y="14" width="37" height="37"/>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="qE0-F1-Wut">
+                                <rect key="frame" x="135" y="49" width="37" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.26666668057441711" green="0.26666668057441711" blue="0.26666668057441711" alpha="1" colorSpace="deviceRGB"/>
                     </view>
                     <connections>
-                        <outlet property="activityIndicator" destination="Xiq-Vz-RnB" id="u5p-Nr-yhj"/>
+                        <outlet property="activityIndicator" destination="qE0-F1-Wut" id="exV-b5-5aC"/>
                         <outlet property="answerCorrectImage" destination="8YT-ZH-cz4" id="afl-36-aQp"/>
+                        <outlet property="nextButton" destination="8LU-MB-bMY" id="v8C-5W-tif"/>
                         <outlet property="questionLabel" destination="Dm3-6k-4Ly" id="WGn-2V-2jx"/>
                         <outlet property="resetScoreButton" destination="jyv-M9-WqI" id="XBX-Ey-AA0"/>
                         <outlet property="userScoreLabel" destination="b0O-C5-BNr" id="N38-AE-enT"/>

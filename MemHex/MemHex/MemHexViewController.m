@@ -27,6 +27,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *resetScoreButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
+@property (weak, nonatomic) IBOutlet UIButton *nextButton;
+
 @end
 
 @implementation MemHexViewController
@@ -44,10 +46,9 @@
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserverForName:CoreDBAvailiabilityNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
         NSLog(@"Received notification that DB is ready");
-        self.activityIndicator.hidden = YES;
-        [self.activityIndicator stopAnimating];
         [self updateData];
         [self updateUI];
+        [self enableUI];
     }];
     
 }
@@ -55,32 +56,49 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    [self.activityIndicator startAnimating];
-    self.activityIndicator.hidden = NO;
-    
+
+    [self disableUI];
     self.db = [[CoreDB alloc] initCoreDB];
-    
     self.userScore = 0;
     self.currentQuestionCorrect = NO;
-    
 }
 
-
-
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     
-    [center addObserver:self selector:@selector(contextChanged:)
-                   name:NSManagedObjectContextDidSaveNotification object:self.db.context];
+    [center addObserver:self selector:@selector(contextChanged:) name:NSManagedObjectContextDidSaveNotification
+                 object:self.db.context];
 }
 
-- (void) contextChanged:(NSNotification *)notification
-{
-    NSLog(@"RECEIVED NOTIFICATION, %@", notification.userInfo);
+- (void) contextChanged:(NSNotification *)notification {
+    NSLog(@"Db has been saved: %@", notification.userInfo);
+}
+
+- (void)disableUI {
+    [self.activityIndicator startAnimating];
+    self.activityIndicator.hidden = NO;
+    for (UIButton *button in self.answerButtons) {
+        button.enabled = NO;
+        button.alpha = 0.5f;
+    }
+    self.nextButton.enabled = NO;
+    self.nextButton.alpha = 0.5f;
+
+}
+
+- (void)enableUI {
+    for (UIButton *button in self.answerButtons) {
+        button.enabled = YES;
+        button.alpha = 1.0f;
+    }
+    
+    self.nextButton.enabled = YES;
+    self.nextButton.alpha = 1.0f;
+    
+    self.activityIndicator.hidden = YES;
+    [self.activityIndicator stopAnimating];
 }
 
 - (void) updateData{
@@ -135,9 +153,8 @@
             }
         }
     }
-
-   
 }
+
 - (IBAction)answerClicked:(UIButton *)sender {
     NSString *submittedAnswer = sender.titleLabel.text;
     NSLog(@"Checking answer, %@ ", submittedAnswer);
