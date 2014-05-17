@@ -11,6 +11,7 @@
 #import "Answer+create.h"
 #import "AnswerType+create.h"
 #import "CoreDB.h"
+#import "notifications.h"
 
 @interface MemHexViewController ()
 
@@ -24,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *userScoreLabel;
 @property (nonatomic) BOOL currentQuestionCorrect;
 @property (weak, nonatomic) IBOutlet UIButton *resetScoreButton;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end
 
@@ -36,16 +38,35 @@
     return _answers;
 }
 
+- (void) awakeFromNib {
+    [super awakeFromNib];
+    NSLog(@"Adding notification listener");
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserverForName:CoreDBAvailiabilityNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+        NSLog(@"Received notification that DB is ready");
+        self.activityIndicator.hidden = YES;
+        [self.activityIndicator stopAnimating];
+        [self updateData];
+        [self updateUI];
+    }];
+    
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    [self.activityIndicator startAnimating];
+    self.activityIndicator.hidden = NO;
+    
     self.db = [[CoreDB alloc] initCoreDB];
-
     
     self.userScore = 0;
     self.currentQuestionCorrect = NO;
+    
 }
+
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -115,8 +136,7 @@
         }
     }
 
-    self.userScoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.userScore];
-    [self.answerCorrectImage setImage: [UIImage imageNamed:@"check"]];
+   
 }
 - (IBAction)answerClicked:(UIButton *)sender {
     NSString *submittedAnswer = sender.titleLabel.text;
@@ -137,11 +157,16 @@
         }
         self.userScore += 2;
         self.currentQuestionCorrect = YES;
+        
+        self.userScoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.userScore];
+        [self.answerCorrectImage setImage: [UIImage imageNamed:@"check"]];
     } else {
         NSLog(@"Question is wrong");
         sender.alpha = 0.2f;
         sender.tintColor = [UIColor blackColor];
         self.userScore--;
+        [self.answerCorrectImage setImage:[UIImage imageNamed:@"wrong"]];
+        self.answerCorrectImage.hidden = NO;
     }
     sender.enabled = NO;
     
@@ -161,8 +186,7 @@
                 //This is the correct answer
                 button.alpha = 0.8f;
                 button.enabled = NO;
-                [self.answerCorrectImage setImage:[UIImage imageNamed:@"wrong"]];
-                self.answerCorrectImage.hidden = NO;
+                
             }
         }
     }

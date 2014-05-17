@@ -10,6 +10,7 @@
 #import "AnswerType+create.h"
 #import "Question+create.h"
 #import "Answer+create.h"
+#import "notifications.h"
 
 @implementation CoreDB
 
@@ -35,6 +36,14 @@
                     self.context = document.managedObjectContext;
                     NSLog(@"Context has been opened");
                     
+                    /*
+                       Send notification the database is available
+                    */
+                    NSLog(@"Sending notification DB is ready");
+                    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+                    NSDictionary *userInfo = @{@"test": @"va"};
+                    [center postNotificationName:CoreDBAvailiabilityNotification object:nil userInfo:userInfo];
+                    
                 } else {
                     NSLog(@"Unable to open database");
                 }
@@ -48,6 +57,14 @@
                       self.context = document.managedObjectContext;
                       [self.context performBlock:^{
                           [self createDefaultDataWithDocument:document];
+                          
+                          //Send notification
+                          [NSThread sleepForTimeInterval:3];
+                          NSLog(@"Sending notification DB is ready");
+                          NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+                          NSDictionary *userInfo = @{@"test": @"va"};
+                          [center postNotificationName:CoreDBAvailiabilityNotification object:nil userInfo:userInfo];
+                          
                       }];
                   } else {
                       NSLog(@"Unable to create database");

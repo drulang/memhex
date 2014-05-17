@@ -48,6 +48,7 @@
 		7109E65D1922EF0500CEDE7C /* Answer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Answer.m; path = model/Answer.m; sourceTree = "<group>"; };
 		7109E65F1922EF0500CEDE7C /* Question.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Question.h; path = model/Question.h; sourceTree = "<group>"; };
 		7109E6601922EF0500CEDE7C /* Question.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Question.m; path = model/Question.m; sourceTree = "<group>"; };
+		7109E6A71927BC4300CEDE7C /* notifications.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = notifications.h; sourceTree = "<group>"; };
 		7118197A191FD5E1001FD4C9 /* MemHex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MemHex.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7118197D191FD5E1001FD4C9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7118197F191FD5E1001FD4C9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -178,6 +179,7 @@
 			children = (
 				71181A231922DAC9001FD4C9 /* CoreDB.h */,
 				71181A241922DAC9001FD4C9 /* CoreDB.m */,
+				7109E6A71927BC4300CEDE7C /* notifications.h */,
 			);
 			name = lib;
 			sourceTree = "<group>";
