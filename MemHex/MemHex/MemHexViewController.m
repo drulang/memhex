@@ -41,14 +41,25 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     self.db = [[CoreDB alloc] initCoreDB];
-    //Need to use notification so that we know DB is done loading and we can update the UI
-    [self.db.context performBlock:^{
-        [self updateData];
-        [self updateUI];
-    }];
+
     
     self.userScore = 0;
     self.currentQuestionCorrect = NO;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    
+    [center addObserver:self selector:@selector(contextChanged:)
+                   name:NSManagedObjectContextDidSaveNotification object:self.db.context];
+}
+
+- (void) contextChanged:(NSNotification *)notification
+{
+    NSLog(@"RECEIVED NOTIFICATION, %@", notification.userInfo);
 }
 
 - (void) updateData{

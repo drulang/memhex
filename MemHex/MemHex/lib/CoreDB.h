@@ -13,7 +13,7 @@
 @property (nonatomic, strong) NSManagedObjectContext *context;
 
 - (instancetype) initCoreDB;  //designated initializer
-- (void) createDefaultDataWithContext:(NSManagedObjectContext *)context;
+- (void)createDefaultDataWithDocument:(UIManagedDocument *)document;
 
 
 @end

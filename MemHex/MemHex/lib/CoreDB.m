@@ -34,6 +34,7 @@
                 if (success) {
                     self.context = document.managedObjectContext;
                     NSLog(@"Context has been opened");
+                    
                 } else {
                     NSLog(@"Unable to open database");
                 }
@@ -46,12 +47,7 @@
                   if (success) {
                       self.context = document.managedObjectContext;
                       [self.context performBlock:^{
-                          [self createDefaultDataWithContext:document.managedObjectContext];
-                          
-                          [document saveToURL:document.fileURL forSaveOperation:UIDocumentSaveForOverwriting
-                            completionHandler:^(BOOL success) {
-                                NSLog(@"Finished saving");
-                            }];
+                          [self createDefaultDataWithDocument:document];
                       }];
                   } else {
                       NSLog(@"Unable to create database");
@@ -63,7 +59,8 @@
 }
 
 
-- (void)createDefaultDataWithContext:(NSManagedObjectContext *)context{
+- (void)createDefaultDataWithDocument:(UIManagedDocument *)document{
+    NSManagedObjectContext *context = document.managedObjectContext;
     
     NSLog(@"Creating default data in database");
     
@@ -139,6 +136,11 @@
             questionID++;
         }
     }
+    
+    [document saveToURL:document.fileURL forSaveOperation:UIDocumentSaveForOverwriting
+      completionHandler:^(BOOL success) {
+          NSLog(@"Finished saving");
+      }];
 }
 
 @end
