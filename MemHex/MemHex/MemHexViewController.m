@@ -23,7 +23,6 @@
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *answerButtons;
 @property (weak, nonatomic) IBOutlet UIImageView *answerCorrectImage;
 @property (weak, nonatomic) IBOutlet UILabel *userScoreLabel;
-@property (nonatomic) BOOL currentQuestionCorrect;
 @property (weak, nonatomic) IBOutlet UIButton *resetScoreButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
@@ -47,8 +46,8 @@
     [center addObserverForName:CoreDBAvailiabilityNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
         NSLog(@"Received notification that DB is ready");
         [self updateData];
-        [self updateUI];
         [self enableUI];
+        [self updateUI];
     }];
     
 }
@@ -60,7 +59,6 @@
     [self disableUI];
     self.db = [[CoreDB alloc] initCoreDB];
     self.userScore = 0;
-    self.currentQuestionCorrect = NO;
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -115,14 +113,10 @@
     self.answers = [[NSMutableArray alloc] initWithArray:randomAnswers];
     //[self.answers addObjectsFromArray:randomAnswers];
     [self.answers addObject:correctAnswer];
-    self.currentQuestionCorrect = NO;
 }
 
 - (IBAction)nextQuestion:(UIButton *)sender {
     [self.db.context performBlock:^{
-        if (!self.currentQuestionCorrect) {
-            self.userScore -= 5;
-        }
         [self updateData];
         [self updateUI];
     }];
@@ -141,7 +135,7 @@
         
         while (true) {
             NSUInteger idx = arc4random() % [self.answers count];
-            NSNumber *idxNumber = [NSNumber numberWithInt:idx];
+            NSNumber *idxNumber = [NSNumber numberWithInteger:idx];
             
             if ([choosenIndex containsObject:idxNumber]) {
                 continue;
@@ -153,6 +147,9 @@
             }
         }
     }
+    
+    self.nextButton.enabled = NO;
+    self.nextButton.alpha = 0.3f;
 }
 
 - (IBAction)answerClicked:(UIButton *)sender {
@@ -173,10 +170,12 @@
             }
         }
         self.userScore += 2;
-        self.currentQuestionCorrect = YES;
         
-        self.userScoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.userScore];
+        self.userScoreLabel.text = [NSString stringWithFormat:@"Score: %ld", (long)self.userScore];
         [self.answerCorrectImage setImage: [UIImage imageNamed:@"check"]];
+        
+        self.nextButton.enabled = YES;
+        self.nextButton.alpha = 1.0f;
     } else {
         NSLog(@"Question is wrong");
         sender.alpha = 0.2f;
@@ -194,7 +193,7 @@
             numberWrongAnswers++;
         }
     }
-    NSLog(@"Number of wrong answers: %d", numberWrongAnswers);
+    NSLog(@"Number of wrong answers: %lu", (unsigned long)numberWrongAnswers);
     
     if (numberWrongAnswers >= 3) {
         //Disable last question
@@ -206,21 +205,24 @@
                 
             }
         }
+        self.nextButton.enabled = YES;
+        self.nextButton.alpha = 1.0f;
     }
     
    
     //See if user score is so low it needs to be reset
-    if (self.userScore < -20) {
-        NSLog(@"User Score: %d", self.userScore);
+    if (self.userScore < -10) {
+        NSLog(@"User Score: %ld", (long)self.userScore);
         self.resetScoreButton.hidden = NO;
     }
     
-    self.userScoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.userScore];
+    self.userScoreLabel.text = [NSString stringWithFormat:@"Score: %ld", (long)self.userScore];
 }
 - (IBAction)resetUserScore:(UIButton *)sender {
     NSLog(@"Resetting user score");
     self.userScore = 0;
     sender.hidden = YES;
+    self.userScoreLabel.text = [NSString stringWithFormat:@"Score: %ld", (long)self.userScore];
 }
 
 @end
