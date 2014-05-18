@@ -13,6 +13,7 @@
 #import "CoreDB.h"
 #import "notifications.h"
 
+
 @interface MemHexViewController ()
 
 @property (nonatomic, strong) CoreDB *db;
@@ -31,6 +32,12 @@
 @end
 
 @implementation MemHexViewController
+
+static const float VIEW_HIDE_ALPHA = 0.5f;
+static const float VIEW_VISIBLE_ALPHA = 1.0f;
+static const float ANSWER_CORRECT_ALPHA = 0.8f;
+static const float ANSWER_INCORRECT_ALPHA = 0.2f;
+static const float BUTTON_DISABLED_ALPHA = 0.3f;
 
 - (NSMutableArray *)answers {
     if (!_answers) {
@@ -79,21 +86,21 @@
     self.activityIndicator.hidden = NO;
     for (UIButton *button in self.answerButtons) {
         button.enabled = NO;
-        button.alpha = 0.5f;
+        button.alpha = VIEW_HIDE_ALPHA;
     }
     self.nextButton.enabled = NO;
-    self.nextButton.alpha = 0.5f;
+    self.nextButton.alpha = VIEW_HIDE_ALPHA;
 
 }
 
 - (void)enableUI {
     for (UIButton *button in self.answerButtons) {
         button.enabled = YES;
-        button.alpha = 1.0f;
+        button.alpha = VIEW_VISIBLE_ALPHA;
     }
     
     self.nextButton.enabled = YES;
-    self.nextButton.alpha = 1.0f;
+    self.nextButton.alpha = VIEW_VISIBLE_ALPHA;
     
     self.activityIndicator.hidden = YES;
     [self.activityIndicator stopAnimating];
@@ -130,7 +137,7 @@
     
     for (UIButton *button in self.answerButtons) {
         button.enabled = YES;
-        button.alpha = 1.0f;
+        button.alpha = VIEW_VISIBLE_ALPHA;
         [button setImage:nil forState:UIControlStateNormal];
         
         while (true) {
@@ -149,7 +156,7 @@
     }
     
     self.nextButton.enabled = NO;
-    self.nextButton.alpha = 0.3f;
+    self.nextButton.alpha = BUTTON_DISABLED_ALPHA;
 }
 
 - (IBAction)answerClicked:(UIButton *)sender {
@@ -158,7 +165,7 @@
     
     if (submittedAnswer == self.currentQuestion.answer.text) {
         NSLog(@"Question is correct");
-        sender.alpha = 0.8f;
+        sender.alpha = ANSWER_CORRECT_ALPHA;
         sender.tintColor = [UIColor greenColor];
         self.answerCorrectImage.hidden = NO;
         
@@ -166,7 +173,7 @@
         for (UIButton *button in self.answerButtons) {
             if (button != sender) {
                 button.enabled = NO;
-                button.alpha = 0.2f;
+                button.alpha = ANSWER_INCORRECT_ALPHA;
             }
         }
         self.userScore += 2;
@@ -175,10 +182,10 @@
         [self.answerCorrectImage setImage: [UIImage imageNamed:@"check"]];
         
         self.nextButton.enabled = YES;
-        self.nextButton.alpha = 1.0f;
+        self.nextButton.alpha = VIEW_VISIBLE_ALPHA;
     } else {
         NSLog(@"Question is wrong");
-        sender.alpha = 0.2f;
+        sender.alpha = ANSWER_INCORRECT_ALPHA;
         sender.tintColor = [UIColor blackColor];
         self.userScore--;
         [self.answerCorrectImage setImage:[UIImage imageNamed:@"wrong"]];
@@ -200,13 +207,13 @@
         for (UIButton *button in self.answerButtons) {
             if (button.enabled) {
                 //This is the correct answer
-                button.alpha = 0.8f;
+                button.alpha = ANSWER_CORRECT_ALPHA;
                 button.enabled = NO;
                 
             }
         }
         self.nextButton.enabled = YES;
-        self.nextButton.alpha = 1.0f;
+        self.nextButton.alpha = VIEW_VISIBLE_ALPHA;
     }
     
    
