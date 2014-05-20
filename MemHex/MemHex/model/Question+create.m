@@ -46,7 +46,7 @@
     if (error) {
         NSLog(@"Error getting number of questions");
     } else {
-        NSString *questionID = [NSString stringWithFormat: @"%d", (arc4random() % numberOfQuestions) + 1]; //Incr by one because IDs start at 1
+        NSString *questionID = [NSString stringWithFormat: @"%u", (arc4random() % numberOfQuestions) + 1]; //Incr by one because IDs start at 1
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id = %@", questionID];
         request.predicate = predicate;
         

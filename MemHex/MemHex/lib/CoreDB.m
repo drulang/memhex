@@ -132,7 +132,7 @@
             NSLog(@"Question: %@", questionText);
             NSLog(@"  Answer: %@", answerText);
             
-            Question *newQuestion = [Question createQuestionWithID:[NSNumber numberWithInt:questionID]
+            Question *newQuestion = [Question createQuestionWithID:[NSNumber numberWithInteger:questionID]
                                                            andText:questionText onContext:context];
             AnswerType *answerAnswerType = [AnswerType answerTypeWithCode:toAnswerType onContext:context];
             Answer *newAnswer = [Answer createAnswerWithText:answerText

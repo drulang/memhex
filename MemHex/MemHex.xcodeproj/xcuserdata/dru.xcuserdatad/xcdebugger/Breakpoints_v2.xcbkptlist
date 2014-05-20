@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MemHex/MemHexViewController.m"
-            timestampString = "422110344.600754"
+            timestampString = "422136555.509433"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "133"
-            endingLineNumber = "133"
+            startingLineNumber = "152"
+            endingLineNumber = "152"
             landmarkName = "-updateUI"
             landmarkType = "5">
          </BreakpointContent>

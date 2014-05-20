@@ -66,6 +66,7 @@ static const float BUTTON_DISABLED_ALPHA = 0.3f;
     [self disableUI];
     self.db = [[CoreDB alloc] initCoreDB];
     self.userScore = 0;
+    
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -75,6 +76,24 @@ static const float BUTTON_DISABLED_ALPHA = 0.3f;
     
     [center addObserver:self selector:@selector(contextChanged:) name:NSManagedObjectContextDidSaveNotification
                  object:self.db.context];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    //Move next button, this is super hackey
+    // 3.5in size: 480
+    // 4in   size: 568
+    float nextButtonSize = self.nextButton.bounds.size.height;
+    float viewSize = self.view.bounds.size.height;
+    if (viewSize > 490) {
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:1.0f];
+        
+        float newY = viewSize - nextButtonSize - 15;
+        self.nextButton.center = CGPointMake(self.nextButton.center.x, newY);
+        
+        [UIView commitAnimations];
+    }
 }
 
 - (void) contextChanged:(NSNotification *)notification {

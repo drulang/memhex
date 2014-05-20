@@ -52,7 +52,7 @@
         for (int i=0; i < count; i++) {
             while (true) {
                 NSUInteger idx = arc4random() % [allAnswersWithType count];
-                NSNumber *idxNumber = [NSNumber numberWithInt:idx];
+                NSNumber *idxNumber = [NSNumber numberWithInteger:idx];
                 if ([choosenIndex containsObject:idxNumber]) {
                     continue;
                 } else if (allAnswersWithType[idx] == answer) {

@@ -232,6 +232,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Dru Lang";
 				TargetAttributes = {
+					71181979191FD5E1001FD4C9 = {
+						DevelopmentTeam = M3PW445462;
+					};
 					7118199A191FD5E1001FD4C9 = {
 						TestTargetID = 71181979191FD5E1001FD4C9;
 					};
@@ -348,6 +351,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Dru Lang (RP82EC3656)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -367,6 +371,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Debug;
 		};
@@ -386,6 +391,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Dru Lang (RP82EC3656)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -397,8 +403,9 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
-				VALIDATE_PRODUCT = YES;
+				VALIDATE_PRODUCT = NO;
 			};
 			name = Release;
 		};
@@ -413,7 +420,7 @@
 				GCC_PREFIX_HEADER = "MemHex/MemHex-Prefix.pch";
 				INFOPLIST_FILE = "MemHex/MemHex-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "03E281F1-67CD-4EA2-8160-8EF6AED1503C";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -429,7 +436,7 @@
 				GCC_PREFIX_HEADER = "MemHex/MemHex-Prefix.pch";
 				INFOPLIST_FILE = "MemHex/MemHex-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "03E281F1-67CD-4EA2-8160-8EF6AED1503C";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
